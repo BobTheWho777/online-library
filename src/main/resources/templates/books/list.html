@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Библиотека</title>
+</head>
+<body>
+<h1>Текущие книги</h1>
+<a href="/books/add">Добавиьт новую книгу</a>
+<table>
+    <tr>
+        <th>Название</th>
+        <th>Автор</th>
+        <th>ISBN</th>
+        <th>Действия</th>
+    </tr>
+    <tr th:each="book : ${books}">
+        <td th:text="${book.title}"></td>
+        <td th:text="${book.author}"></td>
+        <td th:text="${book.isbn}"></td>
+        <td>
+            <a th:href="@{/books/edit/{id}(id=${book.id})}">Изменить</a>
+            <a th:href="@{/books/delete/{id}(id=${book.id})}" onclick="return confirm('Вы уверены?')">Удалить</a>
+        </td>
+    </tr>
+</table>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Выйти" />
+</form>
+</body>
+</html>
