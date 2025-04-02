@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Добавить автора</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div th:replace="~{header}"></div>
+<h1>Добавить автора</h1>
+<form action="#" th:action="@{/authors/add}" th:object="${author}" method="post">
+  <label>Имя:</label>
+  <input type="text" th:field="*{name}" required/>
+  <br/>
+  <label>Фамилия:</label>
+  <input type="text" th:field="*{surname}" required/>
+  <br/>
+  <label>Отчество:</label>
+  <input type="text" th:field="*{lastname}" />
+  <br/>
+  <button type="submit">Добавить</button>
+</form>
+<br/>
+<a href="/authors">Назад к списку</a>
+</body>
+</html>

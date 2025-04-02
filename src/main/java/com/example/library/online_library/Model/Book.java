@@ -1,23 +1,25 @@
 package com.example.library.online_library.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Data
+@Table(name = "books")
 
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private String author;
-    private String isbn;
+
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private Author author;
+    @ManyToOne
+    @JoinColumn(name = "publisher_id")
+    private Publisher publisher;
 
     public Long getId() {
         return id;
@@ -35,19 +37,19 @@ public class Book {
         this.title = title;
     }
 
-    public String getAuthor() {
+    public Author getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Author author) {
         this.author = author;
     }
 
-    public String getIsbn() {
-        return isbn;
+    public Publisher getPublisher() {
+        return publisher;
     }
 
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
     }
 }

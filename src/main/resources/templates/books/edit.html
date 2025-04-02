@@ -4,23 +4,30 @@
     <title>Изменить книгу</title>
 </head>
 <body>
-<h1>Изменить книгу</h1>
-<form method="post" th:action="@{/books/edit/{id}(id=${book.id})}" th:object="${book}">
-    <div>
-        <label>Название</label>
-        <input type="text" th:field="*{title}">
-    </div>
-    <div>
-        <label>Автор:</label>
-        <input type="text" th:field="*{author}">
-    </div>
-    <div>
-        <label>ISBN:</label>
-        <input type="text" th:field="*{isbn}">
-    </div>
-    <div>
-    </div>
+<div th:replace="~{header}"></div>
+<h1>Редактировать книгу</h1>
+<form action="#" th:action="@{/books/edit/{id}(id=${book.id})}" th:object="${book}" method="post">
+    <label>Название:</label>
+    <input type="text" th:field="*{title}" required/>
+    <br/>
+
+    <label>Автор:</label>
+    <select name="authorId" required>
+        <option th:each="author : ${authors}" th:value="${author.id}" th:text="${author.name}"
+                th:selected="${author.id == book.author.id}"></option>
+    </select>
+    <br/>
+
+    <label>Издатель:</label>
+    <select name="publisherId" required>
+        <option th:each="publisher : ${publishers}" th:value="${publisher.id}" th:text="${publisher.title}"
+                th:selected="${publisher.id == book.publisher.id}"></option>
+    </select>
+    <br/>
+
     <button type="submit">Сохранить изменения</button>
 </form>
+<br/>
+<a href="/books">Назад к списку</a>
 </body>
 </html>

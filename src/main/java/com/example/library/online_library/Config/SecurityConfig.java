@@ -15,21 +15,23 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()
-                    .requestMatchers("/admin/**").hasRole("ADMIN")
-                    .requestMatchers("/books/**", "/").authenticated()
-                    .requestMatchers("/login", "/register").permitAll()
-                    .and()
-                .formLogin()
-                    .loginPage("/login")
-                    .defaultSuccessUrl("/books")
-                    .and()
-                .logout()
-                    .logoutUrl("/logout")
-                    .logoutSuccessUrl("/login")
-                    .permitAll()
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"));
+                .authorizeRequests(requests -> requests
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/", "/books/**", "/authors/**", "/publishers/**", "/menu").authenticated()
+                        .requestMatchers("/login", "/register").permitAll()
+                )
 
+                .formLogin(form -> form
+                .loginPage("/login")
+                .defaultSuccessUrl("/books")
+                )
+
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login")
+                        .permitAll()
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+                );
         return http.build();
     }
 

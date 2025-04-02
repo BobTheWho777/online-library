@@ -4,21 +4,28 @@
     <title>Добавить книгу</title>
 </head>
 <body>
+<div th:replace="~{header}"></div>
 <h1>Добавить книгу</h1>
-<form method="post" th:action="@{/books/add}" th:object="${book}">
-    <div>
-        <label>Название:</label>
-        <input type="text" th:field="*{title}">
-    </div>
-    <div>
-        <label>Автор:</label>
-        <input type="text" th:field="*{author}">
-    </div>
-    <div>
-        <label>ISBN:</label>
-        <input type="text" th:field="*{isbn}">
-    </div>
-    <button type="submit">Добавить книгу</button>
+<form action="#" th:action="@{/books/add}" th:object="${book}" method="post">
+    <label>Название:</label>
+    <input type="text" th:field="*{title}" required/>
+    <br/>
+
+    <label>Автор:</label>
+    <select name="authorId" required>
+        <option th:each="author : ${authors}" th:value="${author.id}" th:text="${author.name}"></option>
+    </select>
+    <br/>
+
+    <label>Издатель:</label>
+    <select name="publisherId" required>
+        <option th:each="publisher : ${publishers}" th:value="${publisher.id}" th:text="${publisher.title}"></option>
+    </select>
+    <br/>
+
+    <button type="submit">Добавить</button>
 </form>
+<br/>
+<a href="/books">Назад к списку</a>
 </body>
 </html>
